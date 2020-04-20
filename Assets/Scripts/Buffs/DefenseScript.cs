@@ -5,14 +5,16 @@ using UnityEngine;
 public class DefenseScript : BuffScript
 {
 
+    public override void Remove()
+    {
+        gameObject.GetComponent<CharacterScript>().HideBuff(Indicators.defense);
+        Destroy(this);
+    }
     public override void SetUp(int strong, int time)
     {
         strength = strong;
         duration = time;
-    }
-    public override void Remove()
-    {
-        Destroy(this);
+        gameObject.GetComponent<CharacterScript>().ShowBuff(Indicators.defense);
     }
     protected override void Decrease()
     {

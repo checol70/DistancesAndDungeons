@@ -195,20 +195,7 @@ public class CharacterScript : BuffReferenceScript
     public List<Transform> WeaponHooks = new List<Transform>();
     public List<Transform> OffHandHooks = new List<Transform>();
 
-    public void ShowWeapons(GameObject weapon)
-    {
-        WeaponHooks.ForEach(e => {
-            e.
-            Instantiate(weapon, e);
-        });
-    }
-    public void ShowWeapons(GameObject weapon, GameObject offHandWeapon)
-    {
-        ShowWeapons(weapon);
-        OffHandHooks.ForEach(e => Instantiate(offHandWeapon, e));
-    }
-
-    public void AddIndicator(Indicators i, GameObject g)
+    public void ShowBuff(Indicators i)
     {
         List<GameObject> l;
         switch (i)
@@ -239,7 +226,107 @@ public class CharacterScript : BuffReferenceScript
                 Debug.Log("Missed the right object");
                 break;
         }
-        l.Add(g);
+        l.ForEach(e =>
+        {
+            e.SetActive(true);
+        });
+    }
+    public void HideBuff(Indicators i)
+    {
+        List<GameObject> l;
+        switch (i)
+        {
+            case Indicators.regeneration:
+                l = regenerationIndicators;
+                break;
+            case Indicators.defense:
+                l = defenseIndicators;
+                break;
+            case Indicators.attackBuff:
+                l = attackBuffIndicators;
+                break;
+            case Indicators.stunned:
+                l = stunnedIndicators;
+                break;
+            case Indicators.thorned:
+                l = thornedIndicators;
+                break;
+            case Indicators.defenseShattered:
+                l = defenseShatteredIndicators;
+                break;
+            case Indicators.attackShattered:
+                l = attackShatteredIndicators;
+                break;
+            default:
+                l = new List<GameObject>();
+                Debug.Log("Missed the right object");
+                break;
+        }
+        l.ForEach(e =>
+        {
+            e.SetActive(false);
+        });
+    }
+    public void ShowWeapons(GameObject weapon)
+    {
+        WeaponHooks.ForEach(e => {
+            Transform child = e.GetChild(0);
+                if(child != null)
+                {
+                    Destroy(child.gameObject);
+                }
+                Instantiate(weapon, e);
+        });
+        OffHandHooks.ForEach(e =>
+        {
+            Transform child = e.GetChild(0);
+            if (child != null)
+            {
+                Destroy(child.gameObject);
+            }
+        });
+    }
+    public void ShowWeapons(GameObject weapon, GameObject offHandWeapon)
+    {
+        ShowWeapons(weapon);
+        OffHandHooks.ForEach(e => {
+            Transform child = e.GetChild(0);
+            if (child != null)
+            {
+                Destroy(child.gameObject);
+            }
+            Instantiate(offHandWeapon, e); });
+    }
+
+    public void AddIndicator(Indicators i, GameObject g)
+    {
+        switch (i)
+        {
+            case Indicators.regeneration:
+                regenerationIndicators.Add(g);
+                break;
+            case Indicators.defense:
+                defenseIndicators.Add(g);
+                break;
+            case Indicators.attackBuff:
+                attackBuffIndicators.Add(g);
+                break;
+            case Indicators.stunned:
+                stunnedIndicators.Add(g);
+                break;
+            case Indicators.thorned:
+                thornedIndicators.Add(g);
+                break;
+            case Indicators.defenseShattered:
+                defenseShatteredIndicators.Add(g);
+                break;
+            case Indicators.attackShattered:
+                attackShatteredIndicators.Add(g);
+                break;
+            default:
+                Debug.Log("Missed the right object");
+                break;
+        }
     }
 
     public int CalculateWeaponDamage(WeaponScript weapon)

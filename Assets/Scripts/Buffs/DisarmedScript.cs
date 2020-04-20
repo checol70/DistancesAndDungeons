@@ -6,13 +6,14 @@ using UnityEngine;
 public class DisarmedScript : BuffScript {
 
     public int originalDamage;
-
+    public override void Remove()
+    {
+        gameObject.GetComponent<CharacterScript>().HideBuff(Indicators.attackBuff);
+        Destroy(this);
+    }
     public override void SetUp(int strong, int time)
     {
-        if(indicator == null)
-        {
-            indicator = Instantiate(Resources.Load("DisarmedIndicator") as GameObject, gameObject.transform.root.gameObject.GetComponent<BuffReferenceScript>().BuffShower);
-        }
+        gameObject.GetComponent<CharacterScript>().ShowBuff(Indicators.attackShattered);
         strength += strong;
         duration += time;
         if (gameObject.GetComponent<MonsterScript>())
@@ -47,9 +48,9 @@ public class DisarmedScript : BuffScript {
             MonsterScript target = gameObject.GetComponent<MonsterScript>();
 
             target.AverageDamage = originalDamage;
-            
+
         }
-        Destroy(indicator);
+        gameObject.GetComponent<CharacterScript>().HideBuff(Indicators.attackBuff);
         Destroy(this);
     }
 }
