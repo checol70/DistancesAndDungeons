@@ -28,8 +28,8 @@ public class RegenerationStaffScript : MagicScript {
 
         string dur;
 
-        WeaponVariation = "Regeneration Magic";
-        DMagicType = "RegenerationMagic";
+        WeaponVariation = "Regeneration Staff";
+        DMagicType = "RegenerationStaff";
         if (CalcRules(SpecialRulesEnum.Prolonged) > 0)
             dur = (CalcRules(SpecialRulesEnum.Prolonged) + 1).ToString() + " rounds";
         else dur = "1 round";

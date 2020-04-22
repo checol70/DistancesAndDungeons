@@ -84,7 +84,8 @@ public class WeaponSlotScript : EquipSlotScript
                 WeaponSpawned = Resources.Load("WeaponMeshes/Ranged/" + WeaponContained.GetComponent<WeaponScript>().WeaponVariation) as GameObject;
                 break;
             case WeaponType.Magic:
-                WeaponSpawned = Resources.Load("WeaponMeshes/Staff/" + (WeaponContained.GetComponent<MagicScript>().DMagicType)) as GameObject;
+                Debug.Log(WeaponContained.GetComponent<WeaponScript>().WeaponVariation);
+                WeaponSpawned = Resources.Load("WeaponMeshes/Staff/" + (WeaponContained.GetComponent<WeaponScript>().WeaponVariation)) as GameObject;
                 break;
             case WeaponType.Dagger:
                 string daggertype = WeaponContained.GetComponent<DaggerScript>().WeaponVariation;
