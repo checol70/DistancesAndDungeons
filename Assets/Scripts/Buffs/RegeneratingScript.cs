@@ -18,10 +18,12 @@ public class RegeneratingScript : BuffScript {
     {
         strength = strong;
         duration = time;
+        gameObject.GetComponent<HealthScript>().ShowBuff(Indicators.regeneration);
     }
 
     public override void Remove()
     {
+        gameObject.GetComponent<HealthScript>().HideBuff(Indicators.regeneration);
         Destroy(this);
     }
 }

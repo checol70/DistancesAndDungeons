@@ -7,6 +7,7 @@ public class ThornedScript : BuffScript {
 
     protected override void Decrease()
     {
+        gameObject.GetComponent<HealthScript>().HideBuff(Indicators.thorned);
         duration--;
         if(duration <= 0)
         {
@@ -21,5 +22,6 @@ public class ThornedScript : BuffScript {
     {
         strength = strong;
         duration = time;
+        gameObject.GetComponent<HealthScript>().ShowBuff(Indicators.thorned);
     }
 }

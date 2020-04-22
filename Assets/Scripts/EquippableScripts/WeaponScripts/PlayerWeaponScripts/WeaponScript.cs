@@ -86,13 +86,6 @@ public abstract class WeaponScript : MonoBehaviour
     protected abstract void SetUpSpecifics();
  
 
-    public void Equipped()
-    {
-        EquippedTo = gameObject.transform.root.gameObject;
-
-        WeaponMesh = Resources.Load("WeaponMeshes/" + WeaponVariation) as GameObject;
-        EquippedTo.GetComponent<CharacterScript>().ShowWeapons(WeaponMesh);
-    }
     
     bool HasRule(SpecialRulesEnum rule)
     {

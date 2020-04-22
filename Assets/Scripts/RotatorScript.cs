@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotatorScript : MonoBehaviour
 {
     Rigidbody rb;
-    private Vector3 rotate = new Vector3(0, 2.5f, 0);
+    private Vector3 rotate = new Vector3(0, 0, 2.5f);
     // Start is called before the first frame update
     void Awake()
     {

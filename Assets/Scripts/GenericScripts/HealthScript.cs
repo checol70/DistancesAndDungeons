@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public abstract class HealthScript : MonoBehaviour {
 
@@ -26,7 +27,117 @@ public abstract class HealthScript : MonoBehaviour {
         Type;
     private GameObject
         DamageReveal;
- 
+
+    public List<GameObject> regenerationIndicators = new List<GameObject>(),
+        defenseIndicators = new List<GameObject>(),
+        attackBuffIndicators = new List<GameObject>(),
+        stunnedIndicators = new List<GameObject>(),
+        thornedIndicators = new List<GameObject>(),
+        defenseShatteredIndicators = new List<GameObject>(),
+        disarmedIndicators = new List<GameObject>();
+
+    public void ShowBuff(Indicators i)
+    {
+        List<GameObject> l;
+        switch (i)
+        {
+            case Indicators.regeneration:
+                l = regenerationIndicators;
+                break;
+            case Indicators.defense:
+                l = defenseIndicators;
+                break;
+            case Indicators.attackBuff:
+                l = attackBuffIndicators;
+                break;
+            case Indicators.stunned:
+                l = stunnedIndicators;
+                break;
+            case Indicators.thorned:
+                l = thornedIndicators;
+                break;
+            case Indicators.defenseShattered:
+                l = defenseShatteredIndicators;
+                break;
+            case Indicators.disarmed:
+                l = disarmedIndicators;
+                break;
+            default:
+                l = new List<GameObject>();
+                Debug.Log("Missed the right object");
+                break;
+        }
+        l.ForEach(e =>
+        {
+            e.SetActive(true);
+        });
+    }
+    public void AddIndicator(Indicators i, GameObject g)
+    {
+        switch (i)
+        {
+            case Indicators.regeneration:
+                regenerationIndicators.Add(g);
+                break;
+            case Indicators.defense:
+                defenseIndicators.Add(g);
+                break;
+            case Indicators.attackBuff:
+                attackBuffIndicators.Add(g);
+                break;
+            case Indicators.stunned:
+                stunnedIndicators.Add(g);
+                break;
+            case Indicators.thorned:
+                thornedIndicators.Add(g);
+                break;
+            case Indicators.defenseShattered:
+                defenseShatteredIndicators.Add(g);
+                break;
+            case Indicators.disarmed:
+                disarmedIndicators.Add(g);
+                break;
+            default:
+                Debug.Log("Missed the right object");
+                break;
+        }
+    }
+    public void HideBuff(Indicators i)
+    {
+        List<GameObject> l;
+        switch (i)
+        {
+            case Indicators.regeneration:
+                l = regenerationIndicators;
+                break;
+            case Indicators.defense:
+                l = defenseIndicators;
+                break;
+            case Indicators.attackBuff:
+                l = attackBuffIndicators;
+                break;
+            case Indicators.stunned:
+                l = stunnedIndicators;
+                break;
+            case Indicators.thorned:
+                l = thornedIndicators;
+                break;
+            case Indicators.defenseShattered:
+                l = defenseShatteredIndicators;
+                break;
+            case Indicators.disarmed:
+                l = disarmedIndicators;
+                break;
+            default:
+                l = new List<GameObject>();
+                Debug.Log("Missed the right object");
+                break;
+        }
+        l.ForEach(e =>
+        {
+            e.SetActive(false);
+        });
+    }
     void Start()
     {
         MainCamera = CameraScript.GameController.gameObject;

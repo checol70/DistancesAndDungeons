@@ -18,7 +18,7 @@ public enum Indicators
     stunned,
     thorned,
     defenseShattered,
-    attackShattered
+    disarmed
 }
 
 
@@ -112,14 +112,7 @@ public class CharacterScript : BuffReferenceScript
         WeaponHeld,
         HitTarget,
         LastHit;
-
-    public List<GameObject> regenerationIndicators = new List<GameObject>(),
-        defenseIndicators = new List<GameObject>(),
-        attackBuffIndicators = new List<GameObject>(),
-        stunnedIndicators = new List<GameObject>(),
-        thornedIndicators = new List<GameObject>(),
-        defenseShatteredIndicators = new List<GameObject>(),
-        attackShatteredIndicators = new List<GameObject>();
+    
 
     private SpecificCharacterScript
         mySheet;
@@ -194,79 +187,7 @@ public class CharacterScript : BuffReferenceScript
     public DistanceChecker distanceChecker;
     public List<Transform> WeaponHooks = new List<Transform>();
     public List<Transform> OffHandHooks = new List<Transform>();
-
-    public void ShowBuff(Indicators i)
-    {
-        List<GameObject> l;
-        switch (i)
-        {
-            case Indicators.regeneration:
-                l = regenerationIndicators;
-                break;
-            case Indicators.defense:
-                l = defenseIndicators;
-                break;
-            case Indicators.attackBuff:
-                l = attackBuffIndicators;
-                break;
-            case Indicators.stunned:
-                l = stunnedIndicators;
-                break;
-            case Indicators.thorned:
-                l = thornedIndicators;
-                break;
-            case Indicators.defenseShattered:
-                l = defenseShatteredIndicators;
-                break;
-            case Indicators.attackShattered:
-                l = attackShatteredIndicators;
-                break;
-            default:
-                l = new List<GameObject>();
-                Debug.Log("Missed the right object");
-                break;
-        }
-        l.ForEach(e =>
-        {
-            e.SetActive(true);
-        });
-    }
-    public void HideBuff(Indicators i)
-    {
-        List<GameObject> l;
-        switch (i)
-        {
-            case Indicators.regeneration:
-                l = regenerationIndicators;
-                break;
-            case Indicators.defense:
-                l = defenseIndicators;
-                break;
-            case Indicators.attackBuff:
-                l = attackBuffIndicators;
-                break;
-            case Indicators.stunned:
-                l = stunnedIndicators;
-                break;
-            case Indicators.thorned:
-                l = thornedIndicators;
-                break;
-            case Indicators.defenseShattered:
-                l = defenseShatteredIndicators;
-                break;
-            case Indicators.attackShattered:
-                l = attackShatteredIndicators;
-                break;
-            default:
-                l = new List<GameObject>();
-                Debug.Log("Missed the right object");
-                break;
-        }
-        l.ForEach(e =>
-        {
-            e.SetActive(false);
-        });
-    }
+    
     public void ShowWeapons(GameObject weapon)
     {
         WeaponHooks.ForEach(e => {
@@ -297,37 +218,7 @@ public class CharacterScript : BuffReferenceScript
             }
             Instantiate(offHandWeapon, e); });
     }
-
-    public void AddIndicator(Indicators i, GameObject g)
-    {
-        switch (i)
-        {
-            case Indicators.regeneration:
-                regenerationIndicators.Add(g);
-                break;
-            case Indicators.defense:
-                defenseIndicators.Add(g);
-                break;
-            case Indicators.attackBuff:
-                attackBuffIndicators.Add(g);
-                break;
-            case Indicators.stunned:
-                stunnedIndicators.Add(g);
-                break;
-            case Indicators.thorned:
-                thornedIndicators.Add(g);
-                break;
-            case Indicators.defenseShattered:
-                defenseShatteredIndicators.Add(g);
-                break;
-            case Indicators.attackShattered:
-                attackShatteredIndicators.Add(g);
-                break;
-            default:
-                Debug.Log("Missed the right object");
-                break;
-        }
-    }
+    
 
     public int CalculateWeaponDamage(WeaponScript weapon)
     {
@@ -1461,8 +1352,7 @@ public class CharacterScript : BuffReferenceScript
 
                 AttackCost = EquippedWeapon.GetComponent<WeaponScript>().BaseCost;
                 EquippedWeapon.GetComponent<WeaponScript>().EquippedTo = gameObject;
-
-                EquippedWeapon.GetComponent<WeaponScript>().Equipped();
+                
 
                 WeaponHeld = EquippedWeapon;
             }

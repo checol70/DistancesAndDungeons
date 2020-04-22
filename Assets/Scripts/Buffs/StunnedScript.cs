@@ -7,6 +7,7 @@ public class StunnedScript : BuffScript {
     public float originalMovement;
     public override void SetUp(int strong, int time)
     {
+        gameObject.GetComponent<HealthScript>().ShowBuff(Indicators.stunned);
         if (!gameObject.GetComponent<SlowedScript>())
         {
             if (gameObject.GetComponent<MonsterScript>())
@@ -58,6 +59,7 @@ public class StunnedScript : BuffScript {
             SlowedScript slow = gameObject.GetComponent<SlowedScript>();
             slow.SetUp(slow.strength, slow.duration);
         }
+        gameObject.GetComponent<HealthScript>().HideBuff(Indicators.stunned);
     }
     protected override void Decrease()
     {

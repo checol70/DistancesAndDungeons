@@ -21,13 +21,13 @@ public class DamageBuffScript : BuffScript {
     }
     public override void Remove()
     {
-        gameObject.GetComponent<CharacterScript>().HideBuff(Indicators.attackBuff);
+        gameObject.GetComponent<HealthScript>().HideBuff(Indicators.attackBuff);
         Destroy(this);
     }
     public override void SetUp(int strong, int time)
     {
         strength = strong;
         duration = time;
-        gameObject.GetComponent<CharacterScript>().ShowBuff(Indicators.attackBuff);
+        gameObject.GetComponent<HealthScript>().ShowBuff(Indicators.attackBuff);
     }
 }

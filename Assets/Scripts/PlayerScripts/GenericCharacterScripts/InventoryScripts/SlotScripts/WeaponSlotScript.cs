@@ -5,8 +5,9 @@ public class WeaponSlotScript : EquipSlotScript
 {
 
     private GameObject
-        weaponContained,
-        WeaponSpawned;
+        WeaponContained,
+        WeaponSpawned,
+        OffhandSpawned;
     private WeaponType
         weaponType;
     void Awake()
@@ -46,53 +47,67 @@ public class WeaponSlotScript : EquipSlotScript
         if (gameObject.transform.childCount == 0)
         {
             weaponType = WeaponType.Fisticuffs;
-            weaponContained = null;
-            PreviousItem = null;
-            previousManaPenalty = 0;
-            WeaponSpawned = Resources.Load("WeaponMeshes/Fists") as GameObject;
         }
         else
         {
-            weaponContained = gameObject.transform.GetChild(0).gameObject;
-            if (weaponContained.GetComponent<WeaponScript>())
+            WeaponContained = gameObject.transform.GetChild(0).gameObject;
+            if (WeaponContained.GetComponent<WeaponScript>())
             {
-                weaponType = weaponContained.GetComponent<WeaponScript>().WeaponCategory;
-                weaponContained.GetComponent<WeaponScript>().CalculateManaPenalty();
-                manaPenalty = weaponContained.GetComponent<WeaponScript>().ManaPenalty;
+                weaponType = WeaponContained.GetComponent<WeaponScript>().WeaponCategory;
+                WeaponContained.GetComponent<WeaponScript>().CalculateManaPenalty();
+                manaPenalty = WeaponContained.GetComponent<WeaponScript>().ManaPenalty;
 
             }
             else
                 Debug.Log("You forgot to put WeaponScript on this Item");
         }
-        if (weaponType == WeaponType.Dagger || weaponType == WeaponType.GreatAxe || weaponType == WeaponType.SwordAndShield)
+        switch (weaponType)
         {
-            if (weaponContained.GetComponent<SwordAndShieldScript>())
-            {
-                string swordType = weaponContained.GetComponent<SwordAndShieldScript>().swordType;
-                string shieldType = weaponContained.GetComponent<SwordAndShieldScript>().shieldType;
+            case WeaponType.Fisticuffs:
+                weaponType = WeaponType.Fisticuffs;
+                WeaponContained = null;
+                PreviousItem = null;
+                previousManaPenalty = 0;
+                WeaponSpawned = Resources.Load("WeaponMeshes/Fists") as GameObject;
+                break;
+            case WeaponType.SwordAndShield:
+                string swordType = WeaponContained.GetComponent<SwordAndShieldScript>().swordType;
+                string shieldType = WeaponContained.GetComponent<SwordAndShieldScript>().shieldType;
                 WeaponSpawned = Resources.Load("WeaponMeshes/Sword/" + swordType) as GameObject;
-            }
-            else
-            {
-                string axeType = weaponContained.GetComponent<AxeScript>().axeType;
+                OffhandSpawned = Resources.Load("WeaponMeshes/Shield/" + shieldType) as GameObject;
+                break;
+            case WeaponType.GreatAxe:
+                string axeType = WeaponContained.GetComponent<AxeScript>().axeType;
                 WeaponSpawned = Resources.Load("WeaponMeshes/GreatAxe/" + axeType) as GameObject;
-            }
+                break;
+            case WeaponType.Ranged:
+                WeaponSpawned = Resources.Load("WeaponMeshes/Ranged/" + WeaponContained.GetComponent<WeaponScript>().WeaponVariation) as GameObject;
+                break;
+            case WeaponType.Magic:
+                WeaponSpawned = Resources.Load("WeaponMeshes/Staff/" + (WeaponContained.GetComponent<MagicScript>().DMagicType)) as GameObject;
+                break;
+            case WeaponType.Dagger:
+                string daggertype = WeaponContained.GetComponent<DaggerScript>().WeaponVariation;
+                WeaponSpawned = Resources.Load("WeaponMeshes/Dagger/" + daggertype) as GameObject;
+                break;
+            default:
+                Debug.Log("forgot to add mesh case");
+                break;
         }
-        else if (weaponType == WeaponType.Ranged)
-        {
-            WeaponSpawned = Resources.Load("WeaponMeshes/Ranged/" + weaponContained.GetComponent<WeaponScript>().WeaponVariation) as GameObject;
-        }
-        else if (weaponType == WeaponType.Magic)
-        {
-            Debug.Log(weaponContained.GetComponent<MagicScript>().DMagicType);
-            WeaponSpawned = Resources.Load("WeaponMeshes/Magic/" + (weaponContained.GetComponent<MagicScript>().DMagicType)) as GameObject;
-        }
-        else Debug.Log("forgot to add mesh case");
+
 
 
 
         //WeaponSpawned = Instantiate(Resources.Load("WeaponMeshes/" + weaponType +"/") as GameObject);
         //WeaponSpawned.transform.SetParent(Player.GetComponent<CharacterScript>().WeaponHook.transform, false);
+        if(OffhandSpawned != null)
+        {
+            Player.GetComponent<CharacterScript>().ShowWeapons(WeaponSpawned, OffhandSpawned);
+        }
+        else
+        {
+            Player.GetComponent<CharacterScript>().ShowWeapons(WeaponSpawned);
+        }
         Player.GetComponent<CharacterScript>().EquipNewWeapon();
     }
 

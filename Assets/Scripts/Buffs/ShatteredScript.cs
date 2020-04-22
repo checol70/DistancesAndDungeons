@@ -9,15 +9,12 @@ public class ShatteredScript : BuffScript {
     {
         strength += strong;
         duration += time;
-        if (indicator == null)
-        {
-            indicator = Instantiate(Resources.Load("ShatteredIndicator") as GameObject, gameObject.transform.root.gameObject.GetComponent<BuffReferenceScript>().BuffShower);
-        }
+        gameObject.GetComponent<HealthScript>().ShowBuff(Indicators.defenseShattered);
     }
 
     public override void Remove()
     {
-        Destroy(indicator);
+        gameObject.GetComponent<HealthScript>().HideBuff(Indicators.defenseShattered);
         Destroy(this);
     }
     protected override void Decrease()

@@ -45,20 +45,13 @@ public class StartManagerScript : MonoBehaviour {
         if (FramesTillReady >= 10 && !StartGame)
         {
             StartGame = true;
-            foreach (GameObject torch in Torches)
-            {
-                torch.SetActive(true);
-            }
+            
         }
     }
     // to be called when we first start and also when we Load a new level and are ready to start the players
     void Setup()
     {
-        Torches = GameObject.FindGameObjectsWithTag("Torch");
-        foreach (GameObject torch in Torches)
-        {
-            torch.SetActive(false);
-        }
+        
         FramesTillReady = 0;
         StartGame = false;
     }
