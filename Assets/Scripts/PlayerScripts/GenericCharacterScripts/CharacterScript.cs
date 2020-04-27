@@ -191,19 +191,25 @@ public class CharacterScript : BuffReferenceScript
     public void ShowWeapons(GameObject weapon)
     {
         WeaponHooks.ForEach(e => {
-            Transform child = e.GetChild(0);
-                if(child != null)
-                {
-                    Destroy(child.gameObject);
-                }
-                Instantiate(weapon, e);
+            if (e.childCount > 0)
+            {
+                Transform child = e.GetChild(0);
+                if (child != null)
+                    {
+                        Destroy(child.gameObject);
+                    }
+            }
+            Instantiate(weapon, e);
         });
         OffHandHooks.ForEach(e =>
         {
-            Transform child = e.GetChild(0);
-            if (child != null)
+            if (e.childCount > 0)
             {
-                Destroy(child.gameObject);
+                Transform child = e.GetChild(0);
+                if (child != null)
+                {
+                    Destroy(child.gameObject);
+                }
             }
         });
     }
@@ -211,11 +217,6 @@ public class CharacterScript : BuffReferenceScript
     {
         ShowWeapons(weapon);
         OffHandHooks.ForEach(e => {
-            Transform child = e.GetChild(0);
-            if (child != null)
-            {
-                Destroy(child.gameObject);
-            }
             Instantiate(offHandWeapon, e); });
     }
     

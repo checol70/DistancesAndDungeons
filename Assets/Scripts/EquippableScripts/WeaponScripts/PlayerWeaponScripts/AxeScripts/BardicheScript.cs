@@ -13,6 +13,6 @@ public class BardicheScript : AxeScript {
         SpecialRules.Add(SpecialRulesEnum.IncreasedCrits);
 
         WeaponVariation = "Bardiche";
-        BaseRange = 3f;
+        BaseRange = 3.5f;
     }
 }

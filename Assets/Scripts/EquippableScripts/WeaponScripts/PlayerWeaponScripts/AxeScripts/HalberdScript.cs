@@ -14,7 +14,7 @@ public class HalberdScript : AxeScript {
         SpecialRules.Add(SpecialRulesEnum.Brace);
 
         WeaponVariation = "Halberd";
-        BaseRange = 4f;
+        BaseRange = 4.5f;
         
     }
 }

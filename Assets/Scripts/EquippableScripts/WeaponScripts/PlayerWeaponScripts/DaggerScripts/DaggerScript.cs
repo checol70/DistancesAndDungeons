@@ -12,7 +12,7 @@ public abstract class DaggerScript : WeaponScript {
         SpecialRules.Add(SpecialRulesEnum.BetterCrits);
 
         BaseDamage = 5;
-        BaseRange = 1.5f;
+        BaseRange = 1.1f;
 
         IsMelee = true;
         HandsRequired = ItemType.OneHandedWeapon;

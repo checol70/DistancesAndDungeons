@@ -42,8 +42,6 @@ public class WeaponSlotScript : EquipSlotScript
     }
     public override void EquipItem()
     {
-        if (WeaponSpawned != null)
-            Destroy(WeaponSpawned);
         if (gameObject.transform.childCount == 0)
         {
             weaponType = WeaponType.Fisticuffs;
@@ -68,7 +66,7 @@ public class WeaponSlotScript : EquipSlotScript
                 WeaponContained = null;
                 PreviousItem = null;
                 previousManaPenalty = 0;
-                WeaponSpawned = Resources.Load("WeaponMeshes/Fists") as GameObject;
+                WeaponSpawned = Resources.Load("WeaponMeshes/Fisticuffs") as GameObject;
                 break;
             case WeaponType.SwordAndShield:
                 string swordType = WeaponContained.GetComponent<SwordAndShieldScript>().swordType;
@@ -90,17 +88,12 @@ public class WeaponSlotScript : EquipSlotScript
             case WeaponType.Dagger:
                 string daggertype = WeaponContained.GetComponent<DaggerScript>().WeaponVariation;
                 WeaponSpawned = Resources.Load("WeaponMeshes/Dagger/" + daggertype) as GameObject;
+                OffhandSpawned = Resources.Load("WeaponMeshes/Dagger/" + daggertype) as GameObject;
                 break;
             default:
                 Debug.Log("forgot to add mesh case");
                 break;
         }
-
-
-
-
-        //WeaponSpawned = Instantiate(Resources.Load("WeaponMeshes/" + weaponType +"/") as GameObject);
-        //WeaponSpawned.transform.SetParent(Player.GetComponent<CharacterScript>().WeaponHook.transform, false);
         if(OffhandSpawned != null)
         {
             Player.GetComponent<CharacterScript>().ShowWeapons(WeaponSpawned, OffhandSpawned);
