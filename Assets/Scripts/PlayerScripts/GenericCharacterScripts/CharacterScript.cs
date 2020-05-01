@@ -857,30 +857,6 @@ public class CharacterScript : BuffReferenceScript
         CharacterButtonManaIndicator.value = CurrentMana;
     }
 
-    private IEnumerator AttackAnimation()
-    {
-        switch (EquippedWeaponType)
-        {
-            case WeaponType.Error:
-                Debug.Log("Error weapon Detected");
-                break;
-            case WeaponType.Fisticuffs:
-                break;
-            case WeaponType.SwordAndShield:
-                break;
-            case WeaponType.GreatAxe:
-                break;
-            case WeaponType.Ranged:
-                break;
-            case WeaponType.Magic:
-                break;
-            case WeaponType.Dagger:
-                break;
-            default:
-                break;
-        }
-        yield return null;
-    }
 
     public void Attacking(GameObject Target)
     {
@@ -889,8 +865,37 @@ public class CharacterScript : BuffReferenceScript
             HitTarget = null;
             StillMoving = false;
         }
-
-        StartCoroutine(AttackAnimation());
+        GameObject animation;
+        switch (EquippedWeaponType)
+        {
+            case WeaponType.Error:
+                animation = Instantiate(Resources.Load("Stab") as GameObject);
+                break;
+            case WeaponType.Fisticuffs:
+                animation = Instantiate(Resources.Load("Stab") as GameObject);
+                break;
+            case WeaponType.SwordAndShield:
+                animation = Instantiate(Resources.Load("Slash") as GameObject);
+                break;
+            case WeaponType.GreatAxe:
+                animation = Instantiate(Resources.Load("Slash") as GameObject);
+                break;
+            case WeaponType.Ranged:
+                animation = Instantiate(Resources.Load("Stab") as GameObject);
+                break;
+            case WeaponType.Magic:
+                //need to change this.
+                animation = Instantiate(Resources.Load("Stab") as GameObject);
+                break;
+            case WeaponType.Dagger:
+                animation = Instantiate(Resources.Load("Stab") as GameObject);
+                break;
+            default:
+                animation = Instantiate(Resources.Load("Stab") as GameObject);
+                break;
+        }
+        animation.transform.position = Vector3.MoveTowards(Target.transform.position, gameObject.transform.position, 2f);
+        animation.transform.LookAt(Target.transform, Vector3.up);
 
         // rolling a 20 sided dice for if we get a crit or a fumble.
         int roll = UnityEngine.Random.Range(1, 21);
